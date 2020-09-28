@@ -3,6 +3,7 @@ import scrapy
 
 class JaapScraper(scrapy.Spider):
     name = "Jaap"
+    jaap_prefix = 'https://www.jaap.nl/'
 
     def start_requests(self):
         urls = [
@@ -31,6 +32,12 @@ class JaapScraper(scrapy.Spider):
                     callback=self.parse_detail_page,
                     meta={'item': listItem}
                 )
+
+        bottom_navigation = response.css('div.bottom-navigation')
+        next_page = bottom_navigation.css('a[rel="next"]::attr(href)').get()
+
+        if next_page is not None:
+            yield response.follow(next_page, self.parse)
 
     def parse_detail_page(self, response):
         item = response.meta.get('item', {})
