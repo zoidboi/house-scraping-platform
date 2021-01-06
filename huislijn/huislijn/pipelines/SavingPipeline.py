@@ -1,27 +1,34 @@
-import pymongo
+import pymysql
+import pymysql.cursors
+import json
+from datetime import datetime
 
 
-class MongoDbPipeline:
-    collection_name = 'huislijn_items'
+class MysqlDbPipeline:
+    def __init__(self):
+        db = 'forsale_api'
+        host = 'localhost'
+        port = 3306
+        user = 'root'
+        passwd = ''
 
-    def __init__(self, mongo_uri, mongo_db):
-        self.mongo_uri = mongo_uri
-        self.mongo_db = mongo_db
-
-    @classmethod
-    def from_crawler(cls, crawler):
-        return cls(
-            mongo_uri=crawler.settings.get('MONGO_URI'),
-            mongo_db=crawler.settings.get('MONGO_DATABASE', 'items')
-        )
-
-    def open_spider(self, spider):
-        self.client = pymongo.MongoClient(self.mongo_uri)
-        self.db = self.client[self.mongo_db]
-
-    def close_spider(self, spider):
-        self.client.close()
+        self.db_conn = pymysql.connect(host=host, port=port, db=db, user=user, passwd=passwd, charset='utf8')
+        self.db_cur = self.db_conn.cursor()
 
     def process_item(self, item, spider):
-        self.db[self.collection_name].insert(item)
+        dateTimeObj = datetime.now()
+        dateTimeString = dateTimeObj.strftime('%Y-%m-%d %H:%M:%S')
+
+        unique_listing_identifier = item['id']
+        del item['id']
+
+        sql = "INSERT INTO scrapy_data (source, unique_listing_identifier, data, deleted_at, created_at, updated_at) " \
+              "VALUES ('huislijn', '" + unique_listing_identifier + "', '" + json.dumps(item) + "', null, '" + dateTimeString + "'," \
+              "'" + dateTimeString + "')"
+
+        self.db_cur.execute(sql)
+        self.db_conn.commit()
+
+        print('Insert finished')
+
         return item

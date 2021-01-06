@@ -75,7 +75,7 @@ FAKEUSERAGENT_FALLBACK = 'Mozilla/5.0 (Android; Mobile; rv:40.0)'
 # See https://docs.scrapy.org/en/latest/topics/item-pipeline.html
 ITEM_PIPELINES = {
    'jaap.pipelines.CleanupPipeline.CleanupScrapedJaapDataPipeline': 100,
-   'jaap.pipelines.SavingPipeline.MongoDbPipeline': 800,
+   'jaap.pipelines.SavingPipeline.MysqlDbPipeline': 800,
 }
 
 # Enable and configure the AutoThrottle extension (disabled by default)

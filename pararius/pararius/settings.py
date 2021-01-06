@@ -75,7 +75,7 @@ FAKEUSERAGENT_FALLBACK = 'Mozilla/5.0 (Android; Mobile; rv:40.0)'
 # See https://docs.scrapy.org/en/latest/topics/item-pipeline.html
 ITEM_PIPELINES = {
    'pararius.pipelines.CleanupPipeline.CleanupScrapedParariusDataPipeline': 100,
-   'pararius.pipelines.SavingPipeline.MongoDbPipeline': 800,
+   'pararius.pipelines.SavingPipeline.MysqlDbPipeline': 800,
 }
 
 # Enable and configure the AutoThrottle extension (disabled by default)
@@ -92,7 +92,7 @@ AUTOTHROTTLE_TARGET_CONCURRENCY = 1.0
 AUTOTHROTTLE_DEBUG = True
 
 # Enable and configure HTTP caching (disabled by default)
-# See https://docs.scrapy.org/en/latest/topics/downloader-middleware.html#httpcache-middleware-settings
+# See https://docs.scrapy.org/en/latest/topParariusics/downloader-middleware.html#httpcache-middleware-settings
 #HTTPCACHE_ENABLED = True
 #HTTPCACHE_EXPIRATION_SECS = 0
 #HTTPCACHE_DIR = 'httpcache'

@@ -78,7 +78,7 @@ FAKEUSERAGENT_FALLBACK = 'Mozilla/5.0 (Android; Mobile; rv:40.0)'
 # See https://docs.scrapy.org/en/latest/topics/item-pipeline.html
 ITEM_PIPELINES = {
    'funda.pipelines.CleanupPipeline.CleanupScrapedFundaDataPipeline': 100,
-   'funda.pipelines.SavingPipeline.MongoDbPipeline': 800,
+   'funda.pipelines.SavingPipeline.MysqlDbPipeline': 800,
 }
 
 # Enable and configure the AutoThrottle extension (disabled by default)

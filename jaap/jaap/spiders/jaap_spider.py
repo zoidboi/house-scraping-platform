@@ -7,7 +7,7 @@ class JaapScraper(scrapy.Spider):
 
     def start_requests(self):
         urls = [
-            'https://www.jaap.nl/koophuizen/-prijs-op-aanvraag/sort4'
+            '1'
         ]
         for url in urls:
             yield scrapy.Request(url=url, callback=self.parse)
